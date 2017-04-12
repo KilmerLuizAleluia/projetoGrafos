@@ -1,4 +1,4 @@
-package estrutura;
+package entidades;
 
 import enums.Cor;
 
@@ -72,44 +72,27 @@ public class Vertice {
         this.pai = pai;
     }
 
+    public static int getMOMENTO() {
+        return MOMENTO;
+    }
+
+    public static void setMOMENTO(int MOMENTO) {
+        Vertice.MOMENTO = MOMENTO;
+    }
+
     public void addArestas(Aresta... aresta) {
         arestas.addAll(Arrays.asList(aresta));
     }
 
-    private boolean hasArestas() {
+    public boolean hasArestas() {
         return !arestas.isEmpty();
     }
 
-    static void incrementarMomento() {
+    public static void incrementarMomento() {
         MOMENTO++;
     }
 
-    public void dfs() {
-
-        if (hasArestas()) {
-            setMomentoDescoberta(MOMENTO);
-            setCor(Cor.CINZA);
-            System.out.println("Momento: " + MOMENTO + "; estrutura.Vertice " + nome + ": CINZA");
-
-            for (Aresta aresta : arestas) {
-                if (verticeJaPercorrido(aresta)) {
-                    break;
-                }
-                MOMENTO++;
-                aresta.getVerticesChegada().setPai(this);
-                aresta.getVerticesChegada().dfs();
-            }
-
-        }
-        MOMENTO++;
-        System.out.println("Momento: " + MOMENTO + "; estrutura.Vertice " + nome + ": PRETO");
-        setMomentoFinalizacao(MOMENTO);
-        setCor(Cor.PRETO);
-
+    public static void inicializarMomento() {
+        MOMENTO = 0;
     }
-
-    private boolean verticeJaPercorrido(Aresta aresta) {
-        return !aresta.getVerticesChegada().getCor().equals(Cor.BRANCO);
-    }
-
 }

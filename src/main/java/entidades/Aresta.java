@@ -1,4 +1,4 @@
-package estrutura;
+package entidades;
 
 public class Aresta {
     private Vertice verticesPartida;

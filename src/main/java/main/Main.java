@@ -1,16 +1,16 @@
 package main;
 
-import estrutura.Aresta;
-import estrutura.Grafo;
-import estrutura.Vertice;
+import algoritmos.DFS;
+import algoritmos.Transpositor;
+import entidades.Aresta;
+import entidades.Grafo;
+import entidades.Vertice;
 
 public class Main {
     public static void main(String[] args) {
-
-//        teste1();
-//        teste2();
+        teste1();
+        teste2();
         testeSlide();
-
     }
 
     private static void teste1() {
@@ -27,7 +27,7 @@ public class Main {
         vertice3.addArestas(aresta3);
 
         Grafo grafo = new Grafo(vertice1, vertice2, vertice3);
-        grafo.dfsGrafo();
+        new DFS(grafo);
     }
 
     private static void teste2() {
@@ -52,7 +52,7 @@ public class Main {
         vertice5.addArestas(aresta54);
 
         Grafo grafo = new Grafo(vertice1, vertice2, vertice3, vertice4, vertice5);
-        grafo.dfsGrafo();
+        new DFS(grafo);
     }
 
     private static void testeSlide() {
@@ -89,6 +89,9 @@ public class Main {
         u.addArestas(arestauv, arestaut);
 
         Grafo grafo = new Grafo(s, z, y, x, w, t, v, u);
-        grafo.dfsGrafo();
+        new DFS(grafo);
+        Transpositor transpositor = new Transpositor(grafo);
+        Grafo grafoTransposto = transpositor.transporGrafo();
     }
+
 }
