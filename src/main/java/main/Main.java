@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         teste1();
         teste2();
-        testeSlide();
+//        testeSlide();
     }
 
     private static void teste1() {
@@ -18,16 +18,18 @@ public class Main {
         Vertice vertice2 = new Vertice("v2");
         Vertice vertice3 = new Vertice("v3");
 
-        Aresta aresta1 = new Aresta(vertice1, vertice2);
-        Aresta aresta2 = new Aresta(vertice2, vertice3);
-        Aresta aresta3 = new Aresta(vertice3, vertice1);
+        Aresta aresta12 = new Aresta(vertice1, vertice2);
+        Aresta aresta23 = new Aresta(vertice2, vertice3);
+        Aresta aresta31 = new Aresta(vertice3, vertice1);
 
-        vertice1.addArestas(aresta1);
-        vertice2.addArestas(aresta2);
-        vertice3.addArestas(aresta3);
+        vertice1.addArestas(aresta12, aresta31);
+        vertice2.addArestas(aresta23, aresta12);
+        vertice3.addArestas(aresta31, aresta23);
 
         Grafo grafo = new Grafo(vertice1, vertice2, vertice3);
         new DFS(grafo);
+        Transpositor transpositor = new Transpositor(grafo);
+        Grafo grafoTransposto = transpositor.transporGrafo();
     }
 
     private static void teste2() {
@@ -46,13 +48,15 @@ public class Main {
         Aresta aresta54 = new Aresta(vertice5, vertice4);
 
         vertice1.addArestas(aresta12, aresta13);
-        vertice2.addArestas(aresta23);
-        vertice3.addArestas(aresta34, aresta35);
-        vertice4.addArestas(aresta45);
-        vertice5.addArestas(aresta54);
+        vertice2.addArestas(aresta23, aresta12);
+        vertice3.addArestas(aresta34, aresta35, aresta13, aresta23);
+        vertice4.addArestas(aresta45, aresta34, aresta54);
+        vertice5.addArestas(aresta54, aresta35, aresta45);
 
         Grafo grafo = new Grafo(vertice1, vertice2, vertice3, vertice4, vertice5);
         new DFS(grafo);
+        Transpositor transpositor = new Transpositor(grafo);
+        Grafo grafoTransposto = transpositor.transporGrafo();
     }
 
     private static void testeSlide() {
@@ -79,14 +83,14 @@ public class Main {
         Aresta arestauv = new Aresta(u, v);
         Aresta arestaut = new Aresta(u, t);
 
-        s.addArestas(arestasz, arestasw);
-        z.addArestas(arestazy, arestazw);
-        y.addArestas(arestayx);
-        x.addArestas(arestaxz);
-        w.addArestas(arestawx);
-        t.addArestas(arestatv, arestatu);
-        v.addArestas(arestavw, arestavs);
-        u.addArestas(arestauv, arestaut);
+        s.addArestas(arestasz, arestasw, arestavs);
+        z.addArestas(arestazy, arestazw, arestasz, arestaxz);
+        y.addArestas(arestayx, arestazy);
+        x.addArestas(arestaxz, arestayx, arestawx);
+        w.addArestas(arestawx, arestazw, arestasw, arestavw);
+        t.addArestas(arestatv, arestatu, arestaut);
+        v.addArestas(arestavw, arestavs, arestatv, arestatu);
+        u.addArestas(arestauv, arestaut, arestatu);
 
         Grafo grafo = new Grafo(s, z, y, x, w, t, v, u);
         new DFS(grafo);

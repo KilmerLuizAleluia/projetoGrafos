@@ -5,17 +5,20 @@ import enums.Cor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Vertice {
 
     private static int MOMENTO = 0;
 
     private String nome;
-    private List<Aresta> arestas = new ArrayList<Aresta>();
     private Cor cor = Cor.BRANCO;
     private int momentoDescoberta;
     private int momentoFinalizacao;
     private Vertice pai;
+    private List<Aresta> arestas = new ArrayList<>();
+
+    private List<Aresta> arestasSaindo = new ArrayList<>();
 
     public Vertice() {
     }
@@ -80,12 +83,21 @@ public class Vertice {
         Vertice.MOMENTO = MOMENTO;
     }
 
-    public void addArestas(Aresta... aresta) {
-        arestas.addAll(Arrays.asList(aresta));
+    public List<Aresta> getArestasSaindo() {
+        return arestasSaindo;
     }
 
-    public boolean hasArestas() {
-        return !arestas.isEmpty();
+    public void setArestasSaindo(List<Aresta> arestasSaindo) {
+        this.arestasSaindo = arestasSaindo;
+    }
+
+    public void addArestas(Aresta... aresta) {
+        arestas.addAll(Arrays.asList(aresta));
+        atualizarArestasSaindo();
+    }
+
+    public boolean hasArestasSaindo() {
+        return !arestasSaindo.isEmpty();
     }
 
     public static void incrementarMomento() {
@@ -94,5 +106,11 @@ public class Vertice {
 
     public static void inicializarMomento() {
         MOMENTO = 0;
+    }
+
+    public void atualizarArestasSaindo() {
+        arestasSaindo = arestas.stream()
+                .filter(a -> a.getVerticesPartida().getNome().equals(this.getNome()))
+                .collect(Collectors.toList());
     }
 }

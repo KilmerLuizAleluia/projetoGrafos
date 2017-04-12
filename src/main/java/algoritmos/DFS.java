@@ -39,12 +39,12 @@ public class DFS {
 
     private void dfsVertice(Vertice vertice) {
 
-        if (vertice.hasArestas()) {
+        if (vertice.hasArestasSaindo()) {
             vertice.setMomentoDescoberta(Vertice.getMOMENTO());
             vertice.setCor(Cor.CINZA);
             System.out.println("Momento: " + Vertice.getMOMENTO() + "; entidades.Vertice " + vertice.getNome() + ": CINZA");
 
-            for (Aresta aresta : vertice.getArestas()) {
+            for (Aresta aresta : vertice.getArestasSaindo()) {
                 if (verticeJaPercorrido(aresta)) {
                     break;
                 }

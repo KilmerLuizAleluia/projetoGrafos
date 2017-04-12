@@ -21,6 +21,7 @@ public class Transpositor {
                 Vertice auxiliar = aresta.getVerticesChegada();
                 aresta.setVerticesChegada(aresta.getVerticesPartida());
                 aresta.setVerticesPartida(auxiliar);
+                vertice.atualizarArestasSaindo();
             });
         });
         return grafo;
